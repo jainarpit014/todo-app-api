@@ -75,6 +75,16 @@
         }
 
     </script>
+    <style>
+        .one-task{
+            padding:10px;
+        }
+        .one-task:hover{
+            background: lightgray;
+            cursor: pointer;
+        }
+
+    </style>
 </head>
 <body>
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
@@ -97,14 +107,6 @@
                 <!-- <i class="fa fa-2x fa-twitter"></i> -->
             </a>
         </div>
-        <form class="navbar-form navbar-right" role="search" method="post">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search Task" name="search" id="search">
-			      <span class="input-group-btn">
-			        <button class="btn btn-primary" type="submit"><i class="fa fa-lg fa-search"></i></button>
-			      </span>
-            </div>
-        </form>
     </div>
 </nav>
 <br>
@@ -118,10 +120,10 @@
 
         <!-- Nav tabs -->
         <ul class="nav nav-pills" role="tablist">
-            <li role="presentation" class="active"><a href="#add" aria-controls="add" role="tab" data-toggle="tab">Add</a></li>
+            <li role="presentation" class="active"><a href="#add-task" aria-controls="add" role="tab" data-toggle="tab">Add</a></li>
             <li role="presentation"><a href="#update" aria-controls="update" role="tab" data-toggle="tab" onclick="angular.element(document.getElementById('update')).scope().getTasks();">Update</a></li>
-            <li role="presentation"><a href="#delete" aria-controls="delete" role="tab" data-toggle="tab">Completed</a></li>
-            <li role="presentation"><a href="#archive" aria-controls="archive" role="tab" data-toggle="tab">Archive</a></li>
+            <li role="presentation"><a href="#completed" aria-controls="completed" role="tab" data-toggle="tab" onclick="angular.element(document.getElementById('completed')).scope().getTasks();">Completed</a></li>
+            <li role="presentation"><a href="#archive" aria-controls="archive" role="tab" data-toggle="tab" onclick="angular.element(document.getElementById('archive')).scope().getTasks();">Archive</a></li>
         </ul>
 
         <!-- Tab panes -->
@@ -136,64 +138,109 @@
                         <textarea class="form-control" rows="3" placeholder="Write a short description" ng-model="description"></textarea>
                     </div>
                     <div class="checkbox">
-                        <label>Priority</label>
-                        <select ng-model="priority">
+                        <select ng-model="priority" required>
+                            <option value="">Please Select</option>
                             <option value="low">Low</option>
                             <option value="medium">Medium</option>
                             <option value="high">High</option>
                         </select>
+                        <label style="padding-left: 0">Priority</label>
                     </div>
                     <input type="submit" class="btn btn-sm btn-primary" value="Save">
                 </form>
             </div>
             <div role="tabpanel" class="tab-pane" id="update" ng-controller="UpdateTaskController">
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Added On</th>
-                        <th>Last Update</th>
-                        <th>High Priority</th>
-                        <th>Completed</th>
-                        <th>Update</th>
-                        <th>Archive</th>
-                        <th>Delete</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="value in tasks" id="{{value.id}}">
-                        <td>
+                <div class="input-group col-md-3">
+                    <input type="text" class="form-control" placeholder="Search Task" name="search" id="search" ng-model="search.$">
+			      <span class="input-group-btn">
+			        <button class="btn btn-primary" type="submit"><i class="fa fa-lg fa-search"></i></button>
+			      </span>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-5">
+                        <p><strong>Title</strong></p>
+                    </div>
+                    <div class="col-md-1">
+                        <p><strong>Added On</strong></p>
+                    </div>
+                    <div class="col-md-1">
+                        <p><strong>Last Update</strong></p><!-- <i class="fa fa-sort fa-fw"></i> -->
+                    </div>
+                    <div class="col-md-1">
+                        <p><strong>Priority</strong></p>
+                    </div>
+                    <div class="col-md-1">
+                        <p><strong>Completed</strong></p>
+                    </div>
+                    <div class="col-md-1">
+                        <p><strong>Update</strong></p>
+                    </div>
+                    <div class="col-md-1">
+                        <p><strong>More</strong></p><!-- <i class="fa fa-sort fa-fw"></i> -->
+                    </div>
+                </div>
+                <hr style="margin: 0">
+                <div class="row one-task" ng-repeat="value in tasks | orderBy:'created_at' | filter:search" id="{{value.id}}" >
+                    <form>
+                        <div class="col-md-5">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Title" value="{{value.title}}" readonly>
+                                <input type="text" class="form-control" placeholder="Title" value="{{value.title}}" ng-click="show_details=!show_details">
                             </div>
-                            <!-- <div class="form-group">
-                                <textarea class="form-control" rows="3" placeholder="Write a short description"></textarea>
-                            </div> -->
-                        </td>
-                        <td>{{value.created_at}}</td>
-                        <td>{{value.updated_at}}</td>
-                        <td>
-                            <div class="checkbox">
-                                <select>
-                                    <option value="low" ng-selected="if(value.priority=='low')">Low</option>
-                                    <option value="medium" ng-selected="if(value.priority=='medium')">Medium</option>
-                                    <option value="high" ng-selected="if(value.priority=='high')">High</option>
-                                </select>
+                        </div>
+                        <div class="col-md-1">
+                            {{value.created_at}}
+                        </div>
+                        <div class="col-md-1">
+                            {{value.updated_at}}
+                        </div>
+                        <div class="col-md-1">
+                            <select>
+                                <option value="low" ng-selected="if(value.prioritiy=='low')">Low</option>
+                                <option value="medium" ng-selected="if(value.priority=='medium')">Medium</option>
+                                <option value="high" ng-selected="if(value.priority=='high')">High</option>
+                            </select>
+                        </div>
+                        <div class="col-md-1">
+                            <label>
+                                <input type="checkbox" value="c">
+                            </label>
+                        </div>
+                        <div class="col-md-1">
+                            <input type="button" class="btn btn-info btn-xs" value="Update">
+                        </div>
+                        <div class="col-md-1">
+                            <!-- Extra small button group -->
+                            <div class="btn-group">
+                                <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                                    Select Action <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="" ng-click="updateFlag('a',value.id)">Archive</a></li>
+                                    <li><a href="" ng-click="updateFlag('d',value.id)">Delete</a></li>
+                                    <li><a href="">Email task</a></li>
+                                </ul>
                             </div>
-                        </td>
-                        <td>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" value="c">
-                                </label>
+                        </div>
+                        <div class="row col-md-12" ng-show="show_details">
+                            <div class="col-md-5">
+                                <label>Description</label>
+                                <div class="form-group">
+                                    <textarea class="form-control" rows="3" placeholder="Write a short description">{{value.description}}</textarea>
+                                </div>
+                                <input type="button" class="btn btn-info btn-xs" value="Comment" ng-click="show_comment_area=!show_comment_area"><br>
+                                <div ng-show="show_comment_area">
+                                    <form method="post" enctype="multipart/form-data">
+                                        <textarea class="form-control" rows="3" placeholder="Write your comment here"></textarea>
+                                        <label>Attachment(if any)</label><input type="file"><br>
+                                        <input type="submit" class="btn btn-primary btn-xs" value="Save">
+                                    </form>
+                                </div>
                             </div>
-                        </td>
-                        <td><input type="button" class="btn btn-info btn-xs" value="Update"></td>
-                        <td><input type="button" class="btn btn-warning btn-xs" value="Archive" ng-click="updateFlag('a',value.id)"></td>
-                        <td><input type="button" class="btn btn-danger btn-xs" value="Delete" ng-click="updateFlag('d',value.id)"></td>
-                    </tr>
-                    </tbody>
-                </table>
+                        </div>
+                    </form>
+                </div>
+
             </div>
             <div role="tabpanel" class="tab-pane" id="completed" ng-controller="CompletedTaskController">
                 <table class="table table-hover">
@@ -201,37 +248,32 @@
                     <tr>
                         <th>Title</th>
                         <th>Added On</th>
-                        <th>Last Update</th>
+                        <th>Completed On</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>Mark</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td><input type="button" class="btn btn-danger btn-xs" value="Delete"></td>
+                    <tr ng-repeat="value in tasks">
+                        <td>{{value.title}}</td>
+                        <td>{{value.created_at}}</td>
+                        <td>{{value.updated_at}}</td>
                     </tr>
                     </tbody>
                 </table>
             </div>
-            <div role="tabpanel" class="tab-pane" id="archive">
+            <div role="tabpanel" class="tab-pane" id="archive" ng-controller="ArchiveTaskController">
                 <table class="table table-hover">
                     <thead>
                     <tr>
                         <th>Title</th>
-                        <th>Description</th>
                         <th>Added On</th>
-                        <th>Last Update</th>
-                        <th>Action</th>
+                        <th>Last Updated On</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td><input type="button" class="btn btn-danger btn-xs" value=""></td>
+                    <tr ng-repeat="value in tasks">
+                        <td>{{value.title}}</td>
+                        <td>{{value.created_at}}</td>
+                        <td>{{value.updated_at}}</td>
                     </tr>
                     </tbody>
                 </table>

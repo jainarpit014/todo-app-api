@@ -24,6 +24,9 @@
             }).
                 success(function(data, status, headers, config) {
                     console.log(data);
+                    $scope.title = "";
+                    $scope.description = "";
+                    $scope.priority = "";
                 }).
                 error(function(data, status, headers, config) {
                     console.log(data);
@@ -70,6 +73,22 @@
                 });
 
         }
+        $scope.updateTask = function(){
+            $http({
+                method:'POST',
+                url:'http://localhost:8000/updatetaskflag',
+                data:"task="+tid+"&flag="+flag,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).
+                success(function(data, status, headers, config) {
+
+                    console.log(data);
+                    $scope.getTasks();
+                }).
+                error(function(data, status, headers, config) {
+                    console.log(data);
+                });
+        }
     }]);
     app.controller('CompletedTaskController',["$http","$scope",function($http,$scope){
 
@@ -82,6 +101,28 @@
                 method:'POST',
                 url:'http://localhost:8000/gettasks',
                 data:"email="+$scope.email+"&flag=c",
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).
+                success(function(data, status, headers, config) {
+                    $scope.tasks = data;
+                    console.log($scope.tasks);
+                }).
+                error(function(data, status, headers, config) {
+                    console.log(data);
+                });
+        }
+    }]);
+    app.controller('ArchiveTaskController',["$http","$scope",function($http,$scope){
+
+        $scope.tasks = [];
+        $scope.$on('SaveUserCredentials',function(event,email){
+            $scope.email = email;
+        });
+        $scope.getTasks = function(){
+            $http({
+                method:'POST',
+                url:'http://localhost:8000/gettasks',
+                data:"email="+$scope.email+"&flag=a",
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).
                 success(function(data, status, headers, config) {

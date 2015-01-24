@@ -30,3 +30,4 @@ Route::get('/tasks', function()
 Route::any('gettasks', 'TaskController@getTasksWithFlag');
 Route::post('savetask','TaskController@add');
 Route::any('updatetaskflag','TaskController@UpdateTaskFlag');
+Route::any('updatetask','TaskController@UpdateTask');
