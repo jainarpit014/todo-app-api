@@ -8,18 +8,18 @@
         $scope.priority = "";
         $scope.flag = "n";
         $scope.email = "";
+        //$scope.duedate = "";
         $scope.setUserId = function(email,name){
             $scope.email = email;
             $scope.name = name;
             $rootScope.$broadcast('SaveUserCredentials',email);
         }
         $scope.submit = function(){
-            console.log($scope);
-            console.log($scope.title);
+            var due_date = $('#due-date-input').val();
             $http({
                 method: 'POST',
                 url: 'http://localhost:8000/savetask',
-                data: "title="+$scope.title+"&description="+$scope.description+"&priority="+$scope.priority+"&email="+$scope.email+"&name="+$scope.name,
+                data: "title="+$scope.title+"&description="+$scope.description+"&priority="+$scope.priority+"&email="+$scope.email+"&name="+$scope.name+"&duedate="+due_date,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).
                 success(function(data, status, headers, config) {
@@ -27,6 +27,7 @@
                     $scope.title = "";
                     $scope.description = "";
                     $scope.priority = "";
+                    $('#due-date-input').html("");
                 }).
                 error(function(data, status, headers, config) {
                     console.log(data);
@@ -38,19 +39,20 @@
     app.controller('UpdateTaskController',["$http","$scope",function($http,$scope){
 
         $scope.tasks = [];
+        $scope.comments = [];
+        $scope.rtid = "";
         $scope.$on('SaveUserCredentials',function(event,email){
             $scope.email = email;
         });
-        $scope.getTasks = function(){
+        $scope.getTasks = function(columnName,sortOrder){
             $http({
                method:'POST',
                url:'http://localhost:8000/gettasks',
-                data:"email="+$scope.email+"&flag=n",
+                data:"email="+$scope.email+"&flag=n&column="+columnName+"&order="+sortOrder,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).
             success(function(data, status, headers, config) {
                     $scope.tasks = data;
-                    console.log($scope.tasks);
             }).
                 error(function(data, status, headers, config) {
                     console.log(data);
@@ -73,17 +75,17 @@
                 });
 
         }
-        $scope.updateTask = function(){
+
+        $scope.getComments = function(tid){
             $http({
                 method:'POST',
-                url:'http://localhost:8000/updatetaskflag',
-                data:"task="+tid+"&flag="+flag,
+                url:'http://localhost:8000/getcomments',
+                data:"task_id="+tid,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).
                 success(function(data, status, headers, config) {
-
-                    console.log(data);
-                    $scope.getTasks();
+                    $scope.rtid = tid;
+                    $scope.comments = data;
                 }).
                 error(function(data, status, headers, config) {
                     console.log(data);
@@ -134,6 +136,7 @@
                 });
         }
     }]);
+
 
 
 

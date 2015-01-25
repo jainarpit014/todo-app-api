@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateUsers extends Migration {
+class UpdateTasksDuedate extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,7 +12,8 @@ class UpdateUsers extends Migration {
 	 */
 	public function up()
 	{
-        //DB::statement('ALTER TABLE users ADD UNIQUE (email);');
+		//
+        //DB::statement('ALTER TABLE tasks ALTER COLUMN duedate TYPE TIMESTAMP;');
 	}
 
 	/**

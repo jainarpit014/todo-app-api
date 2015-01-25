@@ -3,15 +3,74 @@
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/datepicker.css">
 
     <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.28/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+
+
     <script src="/js/app.js"></script>
+    <script src="/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript">
 
+        function initializeDTP(){
+            $('.dtpicker').datetimepicker();
+            dueDates = $('.dtpicker');
+        }
         $(document).ready(function(){
-            $('#loginModal').modal('show')
+            $('#loginModal').modal('show');
+            $('#datetimepicker1').datetimepicker();
+
+
+            $(document).on('submit','.comment-add',function(){
+                var data = new FormData(this);
+                $.ajax({
+                    url:'http://localhost:8000/savecomment',
+                    data:data,
+                    type:'POST',
+                    mimeType:"multipart/form-data",
+                    contentType: false,
+                    cache: false,
+                    processData:false,
+                    success: function(data, textStatus, jqXHR)
+                    {
+                        console.log(data);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+
+                    }
+
+                })
+
+            });
+            $(document).on('submit','.task-form',function(){
+                var data = new FormData(this);
+                $.ajax({
+                    url:'http://localhost:8000/updatetask',
+                    data:data,
+                    type:'POST',
+                    mimeType:"multipart/form-data",
+                    contentType: false,
+                    cache: false,
+                    processData:false,
+                    success: function(data, textStatus, jqXHR)
+                    {
+                        if(data=="true")
+                        {
+                            angular.element(document.getElementById('update')).scope().getTasks("updated_at","DESC");
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+
+                    }
+                })
+            });
+
+
         });
         (function() {
             var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
@@ -83,6 +142,11 @@
             background: lightgray;
             cursor: pointer;
         }
+        .col-md-4,.col-md-1,.col-md-2
+        {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
 
     </style>
 </head>
@@ -113,17 +177,13 @@
 <br>
 <br>
 <div class="container-fluid">
-    <!-- <button type="button" class="btn btn-primary btn-lg" onclick="login()" data-toggle="modal" data-target="#loginModal"><i class="fa fa-2x fa-google-plus"></i></button> -->
-    <!-- <input type="button"  value="Logout" onclick="logout()" /> -->
-    <!-- <div id="profile">User Information</div> -->
     <div role="tabpanel">
-
         <!-- Nav tabs -->
         <ul class="nav nav-pills" role="tablist">
             <li role="presentation" class="active"><a href="#add-task" aria-controls="add" role="tab" data-toggle="tab">Add</a></li>
-            <li role="presentation"><a href="#update" aria-controls="update" role="tab" data-toggle="tab" onclick="angular.element(document.getElementById('update')).scope().getTasks();">Update</a></li>
-            <li role="presentation"><a href="#completed" aria-controls="completed" role="tab" data-toggle="tab" onclick="angular.element(document.getElementById('completed')).scope().getTasks();">Completed</a></li>
-            <li role="presentation"><a href="#archive" aria-controls="archive" role="tab" data-toggle="tab" onclick="angular.element(document.getElementById('archive')).scope().getTasks();">Archive</a></li>
+            <li role="presentation"><a href="#update" aria-controls="update" role="tab" data-toggle="tab" onclick="angular.element(document.getElementById('update')).scope().getTasks('updated_at','DESC');">Update</a></li>
+            <li role="presentation"><a href="#completed" aria-controls="completed" role="tab" data-toggle="tab" onclick="angular.element(document.getElementById('completed')).scope().getTasks('updated_at','DESC');">Completed</a></li>
+            <li role="presentation"><a href="#archive" aria-controls="archive" role="tab" data-toggle="tab" onclick="angular.element(document.getElementById('archive')).scope().getTasks('updated_at','DESC');">Archive</a></li>
         </ul>
 
         <!-- Tab panes -->
@@ -146,6 +206,12 @@
                         </select>
                         <label style="padding-left: 0">Priority</label>
                     </div>
+                    <div class="form-group">
+                        <div class="input-group date" id="datetimepicker1">
+                            <input type="text" id="due-date-input" class="form-control" data-date-format="YYYY-MM-DD HH:mm:ss" ng-model="duedate">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                        </div>
+                    </div>
                     <input type="submit" class="btn btn-sm btn-primary" value="Save">
                 </form>
             </div>
@@ -158,17 +224,20 @@
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col-md-5">
+                    <div class="col-md-4">
                         <p><strong>Title</strong></p>
                     </div>
+                    <div class="col-md-2">
+                        <strong>Due Date</strong><a href="" ng-click="getTasks('duedate','DESC')"><i class="fa fa-caret-up fa-2x"></i></a><a href="" ng-click="getTasks('duedate','ASC')"><i class="fa fa-caret-down fa-2x"></i></a>
+                    </div>
                     <div class="col-md-1">
-                        <p><strong>Added On</strong></p>
+                        <strong>Added On</strong>
                     </div>
                     <div class="col-md-1">
                         <p><strong>Last Update</strong></p><!-- <i class="fa fa-sort fa-fw"></i> -->
                     </div>
                     <div class="col-md-1">
-                        <p><strong>Priority</strong></p>
+                        <strong>Priority</strong><a href=""><i class="fa fa-caret-up fa-2x"></i></a><a href=""><i class="fa fa-caret-down fa-2x"></i></a>
                     </div>
                     <div class="col-md-1">
                         <p><strong>Completed</strong></p>
@@ -181,11 +250,19 @@
                     </div>
                 </div>
                 <hr style="margin: 0">
-                <div class="row one-task" ng-repeat="value in tasks | orderBy:'created_at' | filter:search" id="{{value.id}}" >
-                    <form>
-                        <div class="col-md-5">
+                <div class="row one-task" ng-repeat="value in tasks | filter:search" id="{{value.id}}" >
+                    <form class="task-form">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Title" value="{{value.title}}" ng-click="show_details=!show_details">
+                                <input type="text" class="form-control" placeholder="Title" value="{{value.title}}" ng-click="show_details=!show_details" name="title">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <div class="input-group date dtpicker" onmouseover="initializeDTP()" id="datepicker-{{value.id}}" >
+                                    <input type="text" class="form-control" data-date-format="YYYY-MM-DD HH:mm:ss" value="{{value.duedate}}" name="duedate">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-1">
@@ -195,19 +272,19 @@
                             {{value.updated_at}}
                         </div>
                         <div class="col-md-1">
-                            <select>
-                                <option value="low" ng-selected="if(value.prioritiy=='low')">Low</option>
-                                <option value="medium" ng-selected="if(value.priority=='medium')">Medium</option>
-                                <option value="high" ng-selected="if(value.priority=='high')">High</option>
+                            <select name="priority">
+                                <option value="low" ng-selected="{{value.priority}}==low">Low</option>
+                                <option value="medium" ng-selected="{{value.priority}}==medium">Medium</option>
+                                <option value="high" ng-selected="{{value.priority}}==high">High</option>
                             </select>
                         </div>
                         <div class="col-md-1">
                             <label>
-                                <input type="checkbox" value="c">
+                                <input type="checkbox" value="c" name="completed">
                             </label>
                         </div>
                         <div class="col-md-1">
-                            <input type="button" class="btn btn-info btn-xs" value="Update">
+                            <input type="submit" class="btn btn-info btn-xs" value="Update" ng-click="updateTask(value.id)">
                         </div>
                         <div class="col-md-1">
                             <!-- Extra small button group -->
@@ -219,6 +296,7 @@
                                     <li><a href="" ng-click="updateFlag('a',value.id)">Archive</a></li>
                                     <li><a href="" ng-click="updateFlag('d',value.id)">Delete</a></li>
                                     <li><a href="">Email task</a></li>
+                                    <li><a href="">Export in PDF</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -226,19 +304,34 @@
                             <div class="col-md-5">
                                 <label>Description</label>
                                 <div class="form-group">
-                                    <textarea class="form-control" rows="3" placeholder="Write a short description">{{value.description}}</textarea>
+                                    <textarea class="form-control" rows="3" placeholder="Write a short description" name="description">{{value.description}}</textarea>
                                 </div>
-                                <input type="button" class="btn btn-info btn-xs" value="Comment" ng-click="show_comment_area=!show_comment_area"><br>
-                                <div ng-show="show_comment_area">
-                                    <form method="post" enctype="multipart/form-data">
-                                        <textarea class="form-control" rows="3" placeholder="Write your comment here"></textarea>
-                                        <label>Attachment(if any)</label><input type="file"><br>
-                                        <input type="submit" class="btn btn-primary btn-xs" value="Save">
-                                    </form>
-                                </div>
+                                <!--<input type="button" class="btn btn-info btn-xs" value="Comment" ng-click="show_comment_area=!show_comment_area"><br>-->
                             </div>
                         </div>
-                    </form>
+                        <input type="hidden" value="{{value.id}}" name="task_id">
+                        </form>
+                        <div class="row col-md-12">
+                                <div class="col-md-5" ng-show="show_details">
+                                    <form class="comment-add" enctype="multipart/form-data" method="post">
+                                        <label>Write your comment below</label>
+                                        <textarea class="form-control" rows="3" placeholder="Write your comment here" name="comment-text"></textarea>
+                                        <label>Attachment(if any)</label><input type="file" name="comment-file"><br>
+                                        <input type="submit" class="btn btn-primary btn-xs save-comment" value="Save">
+                                        <input type="hidden" value="{{value.id}}" name="task_id">
+                                    </form>
+                                    <input type="button" class="btn btn-info btn-xs" value="Show previous comments" ng-click="getComments(value.id)">
+                                </div>
+                                <div class="row col-md-5 previous-comments">
+                                    <ul class="list-group">
+                                        <li class="list-group-item" ng-repeat="comment in comments | orderBy:'createdAt'" ng-show="value.id=={{comment.task_id}}">
+                                                <label>{{comment.text}}{{comment.task_id}}</label>
+                                                <a ng-href="{{comment.url}}">Download attachment</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                        </div>
+
                 </div>
 
             </div>

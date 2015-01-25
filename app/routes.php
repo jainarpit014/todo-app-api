@@ -27,7 +27,14 @@ Route::get('/tasks', function()
     //return View::make('hello');
     return Task::all();
 });
+Route::get('/comments', function()
+{
+    //return View::make('hello');
+    return Comments::all();
+});
 Route::any('gettasks', 'TaskController@getTasksWithFlag');
 Route::post('savetask','TaskController@add');
 Route::any('updatetaskflag','TaskController@UpdateTaskFlag');
 Route::any('updatetask','TaskController@UpdateTask');
+Route::any('savecomment','CommentController@add');
+Route::any('getcomments','CommentController@getComments');

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateUsers extends Migration {
+class UpdateTasksForeignKey extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,7 +12,11 @@ class UpdateUsers extends Migration {
 	 */
 	public function up()
 	{
-        //DB::statement('ALTER TABLE users ADD UNIQUE (email);');
+		//
+        /*Schema::table('tasks', function(Blueprint $table)
+        {
+            $table->foreign('user_id')->references('id')->on('users');
+        });*/
 	}
 
 	/**

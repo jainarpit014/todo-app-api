@@ -18,10 +18,15 @@ class CreateCommentsTable extends Migration {
             $table->create();
             $table->increments('id');
             $table->integer('task_id');
-            $table->foreign('task_id')->references('id')->on('tasks');
             $table->string('text');
+            $table->string('url');
             $table->timestamps();
 		});
+        /*Schema::table('comments', function(Blueprint $table)
+        {
+            //
+            $table->foreign('task_id')->references('id')->on('tasks');
+        });*/
 	}
 
 	/**

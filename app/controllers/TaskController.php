@@ -22,12 +22,14 @@ class TaskController extends BaseController {
         Request::replace($request->input());
         $userId = Route::dispatch($request)->getContent();
         Request::replace($originalInput);
-        Task::create(array('user_id'=>$userId,'title'=>Input::get('title'),'description'=>Input::get('description'),'priority'=>Input::get('priority'),'flag'=>'n'));
+
+        Task::create(array('user_id'=>$userId,'title'=>Input::get('title'),'description'=>Input::get('description'),'priority'=>Input::get('priority'),'flag'=>'n','duedate'=>Input::get('duedate')));
 
         echo true;
     }
     public function getTasksWithFlag()
     {
+
         $originalInput = Request::input();
         $request = Request::create('/users/add', 'POST', array('email'=>Input::get('email'),'name'=>Input::get('name')));
         Request::replace($request->input());
@@ -35,7 +37,7 @@ class TaskController extends BaseController {
         Request::replace($originalInput);
 
 
-        $response = Task::where(array('flag'=>Input::get('flag'),'user_id'=>$userId))->get();
+        $response = Task::where(array('flag'=>Input::get('flag'),'user_id'=>$userId))->orderBy(Input::get('column'),Input::get('order'))->get();
         $responseArray = $response->toJson();
 
         return $responseArray;
@@ -50,7 +52,20 @@ class TaskController extends BaseController {
     }
     public function UpdateTask()
     {
-
+        $task = Task::find(Input::get('task_id'));
+        $task->title = Input::get('title');
+        $task->description = Input::get('description');
+        $task->priority = Input::get('priority');
+        $task->duedate = Input::get('duedate');
+        $task->flag = Input::get('completed');
+        $response = $task->save();
+        if($response)
+        {
+            return "true";
+        }
+        else{
+            return "false";
+        }
     }
 
 }
