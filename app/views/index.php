@@ -233,8 +233,9 @@
 			      <span class="input-group-btn">
 			        <button class="btn btn-primary" type="submit"><i class="fa fa-lg fa-search"></i></button>
 			      </span>
-                 <button class="btn btn-xs btn-primary" onclick="createPDF();">Export in PDF</button>
-                </div>
+		</div><br>
+                <!-- <button class="btn btn-sm btn-primary" onclick="createPDF();">Export in PDF</button>-->
+            
 
                 <br>
                 <div class="row">
@@ -242,16 +243,16 @@
                         <strong>Title</strong>
                     </div>
                     <div class="col-md-2">
-                        <strong>Due Date</strong><a href="" ng-click="getTasks('duedate','DESC')"><i class="fa fa-caret-up fa-2x"></i></a><a href="" ng-click="getTasks('duedate','ASC')"><i class="fa fa-caret-down fa-2x"></i></a>
+                        <strong>Due Date</strong><br><a href="" ng-click="getTasks('duedate','DESC')"><i class="fa fa-caret-up fa-2x"></i></a><a href="" ng-click="getTasks('duedate','ASC')"><i class="fa fa-caret-down fa-2x"></i></a>
                     </div>
                     <div class="col-md-1">
-                        <strong>Added On</strong><a href="" ng-click="getTasks('created_at','DESC')"><i class="fa fa-caret-up fa-2x"></i></a><a href="" ng-click="getTasks('created_at','ASC')"><i class="fa fa-caret-down fa-2x"></i></a>
+                        <strong>Added On</strong><br><a href="" ng-click="getTasks('created_at','DESC')"><i class="fa fa-caret-up fa-2x"></i></a><a href="" ng-click="getTasks('created_at','ASC')"><i class="fa fa-caret-down fa-2x"></i></a>
                     </div>
                     <div class="col-md-1">
-                        <strong>Last Update</strong><a href="" ng-click="getTasks('updated_at','DESC')"><i class="fa fa-caret-up fa-2x"></i></a><a href="" ng-click="getTasks('updated_at','ASC')"><i class="fa fa-caret-down fa-2x"></i></a>
+                        <strong>Last Update</strong><br><a href="" ng-click="getTasks('updated_at','DESC')"><i class="fa fa-caret-up fa-2x"></i></a><a href="" ng-click="getTasks('updated_at','ASC')"><i class="fa fa-caret-down fa-2x"></i></a>
                     </div>
                     <div class="col-md-1">
-                        <strong>Priority</strong><a href="" ng-click="getTasks('priority','DESC')"><i class="fa fa-caret-up fa-2x"></i></a><a href="" ng-click="getTasks('priority','ASC')"><i class="fa fa-caret-down fa-2x"></i></a>
+                        <strong>Priority</strong><br><a href="" ng-click="getTasks('priority','DESC')"><i class="fa fa-caret-up fa-2x"></i></a><a href="" ng-click="getTasks('priority','ASC')"><i class="fa fa-caret-down fa-2x"></i></a>
                     </div>
                     <div class="col-md-1">
                         <p><strong>Completed</strong></p>

@@ -57,8 +57,11 @@ class TaskController extends BaseController {
         $task->description = Input::get('description');
         $task->priority = Input::get('priority');
         $task->duedate = Input::get('duedate');
-        $task->flag = Input::get('completed');
-        $response = $task->save();
+        if(Input::get('completed')!="")
+        {
+            $task->flag = Input::get('completed');
+        }
+	$response = $task->save();
         if($response)
         {
             return "true";
