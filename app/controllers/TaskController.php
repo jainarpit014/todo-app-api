@@ -78,6 +78,7 @@ class TaskController extends BaseController {
             $message->from('todo_app@todoapp.com', 'Todo-App');
             $message->to(Input::get('email'), Input::get('name'))->subject('New Task.');
         });
+        echo "ya";
     }
 
 }

@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 	</head>
 	<body>
-		<h2>New task created on {{AddedOn}}</h2>
+		<h2>New task created</h2>
 		<div>
 			<h3>{{Title}}</h3>
             <h4>{{Description}}</h4>
