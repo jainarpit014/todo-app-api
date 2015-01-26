@@ -309,7 +309,7 @@
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="" ng-click="updateFlag('a',value.id)">Archive</a></li>
                                     <li><a href="" ng-click="updateFlag('d',value.id)">Delete</a></li>
-                                    <li><a href="">Email task</a></li>
+                                    <li><a href="" ng-click="sendEmail(value.id);">Email task</a></li>
                                 </ul>
                             </div>
                         </div>
