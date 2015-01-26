@@ -40,3 +40,5 @@ Route::any('savecomment','CommentController@add');
 Route::any('getcomments','CommentController@getComments');
 Route::any('sendmail','TaskController@emailTask');
 Route::post('oauth/access_token', 'OAuthController@accessToken');
+Route::any('createapp',['before'=>'auth.basic','uses'=>'UserController@createApp']);
+Route::post('oauth/id_secret','OAuthController@generateIdSecret');

@@ -43,4 +43,27 @@ class OAuthController extends Controller
 
         return Redirect::to($redirectUri);
     }
+    public function generateRandomString($length = 6) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+    public function generateIdSecret()
+    {
+        $clientId = $this->generateRandomString(20);
+        $clientSecret = $this->generateRandomString(25);
+        $response = OauthClient::create(array('id'=>$clientId,'secret'=>$clientSecret,'name'=>Input::get('app_name')));
+        if($response)
+        {
+            $user = User::find(Auth::user()->id);
+            $user->user_auth = $clientId;
+            $resp = $user->save;
+            return View::make('client_token')->with('client_data',array('id'=>$clientId,'secret'=>$clientSecret));
+        }
+
+    }
 }

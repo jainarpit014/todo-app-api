@@ -34,6 +34,17 @@ class UserController extends BaseController {
         }
         return $randomString;
     }
+    public function createApp()
+    {
+        $user = User::find(Auth::user()->id);
+        if($user->user_auth)
+        {
+
+        }
+        else{
+            return View::make('create_app');
+        }
+    }
 
 }
 
