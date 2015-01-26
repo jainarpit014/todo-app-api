@@ -98,11 +98,11 @@
         $scope.$on('SaveUserCredentials',function(event,email){
             $scope.email = email;
         });
-        $scope.getTasks = function(){
+        $scope.getTasks = function(columnName,sortOrder){
             $http({
                 method:'POST',
                 url:'http://localhost:8000/gettasks',
-                data:"email="+$scope.email+"&flag=c",
+                data:"email="+$scope.email+"&flag=c&column="+columnName+"&order="+sortOrder,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).
                 success(function(data, status, headers, config) {
@@ -120,11 +120,11 @@
         $scope.$on('SaveUserCredentials',function(event,email){
             $scope.email = email;
         });
-        $scope.getTasks = function(){
+        $scope.getTasks = function(columnName,sortOrder){
             $http({
                 method:'POST',
                 url:'http://localhost:8000/gettasks',
-                data:"email="+$scope.email+"&flag=a",
+                data:"email="+$scope.email+"&flag=a&column="+columnName+"&order="+sortOrder,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).
                 success(function(data, status, headers, config) {

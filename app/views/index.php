@@ -20,7 +20,12 @@
             dueDates = $('.dtpicker');
         }
         $(document).ready(function(){
-            $('#loginModal').modal('show');
+            $('#loginModal').modal({
+                show:'true',
+                keyboard:false,
+                backdrop:'static'
+
+            });
             $('#datetimepicker1').datetimepicker();
 
 
@@ -100,7 +105,6 @@
             if(result['status']['signed_in'])
             {
                 $("#loginModal").modal('hide');
-                console.log('Login Success');
                 var request = gapi.client.plus.people.get({
                     'userId':'me'
                 });
@@ -147,6 +151,9 @@
             padding-left: 10px;
             padding-right: 10px;
         }
+        .modal-backdrop.in {
+            opacity: 0.9;
+        }
 
     </style>
 </head>
@@ -155,8 +162,8 @@
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="loginModalTitle">Login with</h4>
+<!--                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+                <h4 class="modal-title" id="loginModalTitle">Todo App - Login</h4>
             </div>
             <div class="modal-body col-md-offset-4">
                 <button type="button" class="btn btn-primary btn-lg" onclick="login()"><i class="fa fa-2x fa-google-plus"></i></button>
@@ -181,9 +188,9 @@
         <!-- Nav tabs -->
         <ul class="nav nav-pills" role="tablist">
             <li role="presentation" class="active"><a href="#add-task" aria-controls="add" role="tab" data-toggle="tab">Add</a></li>
-            <li role="presentation"><a href="#update" aria-controls="update" role="tab" data-toggle="tab" onclick="angular.element(document.getElementById('update')).scope().getTasks('updated_at','DESC');">Update</a></li>
-            <li role="presentation"><a href="#completed" aria-controls="completed" role="tab" data-toggle="tab" onclick="angular.element(document.getElementById('completed')).scope().getTasks('updated_at','DESC');">Completed</a></li>
-            <li role="presentation"><a href="#archive" aria-controls="archive" role="tab" data-toggle="tab" onclick="angular.element(document.getElementById('archive')).scope().getTasks('updated_at','DESC');">Archive</a></li>
+            <li role="presentation"><a href="#update" aria-controls="update" role="tab" data-toggle="tab" onclick="angular.element(document.getElementById('update')).scope().getTasks('updated_at','DESC')">Update</a></li>
+            <li role="presentation"><a href="#completed" aria-controls="completed" role="tab" data-toggle="tab" onclick="angular.element(document.getElementById('completed')).scope().getTasks('updated_at','DESC')">Completed</a></li>
+            <li role="presentation"><a href="#archive" aria-controls="archive" role="tab" data-toggle="tab" onclick="angular.element(document.getElementById('archive')).scope().getTasks('updated_at','DESC')">Archive</a></li>
         </ul>
 
         <!-- Tab panes -->
