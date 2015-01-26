@@ -207,9 +207,9 @@
                     <div class="checkbox">
                         <select ng-model="priority" required>
                             <option value="">Please Select</option>
-                            <option value="low">Low</option>
-                            <option value="medium">Medium</option>
-                            <option value="high">High</option>
+                            <option value="0">Low</option>
+                            <option value="1">Medium</option>
+                            <option value="2">High</option>
                         </select>
                         <label style="padding-left: 0">Priority</label>
                     </div>
@@ -232,19 +232,19 @@
                 <br>
                 <div class="row">
                     <div class="col-md-4">
-                        <p><strong>Title</strong></p>
+                        <strong>Title</strong>
                     </div>
                     <div class="col-md-2">
                         <strong>Due Date</strong><a href="" ng-click="getTasks('duedate','DESC')"><i class="fa fa-caret-up fa-2x"></i></a><a href="" ng-click="getTasks('duedate','ASC')"><i class="fa fa-caret-down fa-2x"></i></a>
                     </div>
                     <div class="col-md-1">
-                        <strong>Added On</strong>
+                        <strong>Added On</strong><a href="" ng-click="getTasks('created_at','DESC')"><i class="fa fa-caret-up fa-2x"></i></a><a href="" ng-click="getTasks('created_at','ASC')"><i class="fa fa-caret-down fa-2x"></i></a>
                     </div>
                     <div class="col-md-1">
-                        <p><strong>Last Update</strong></p><!-- <i class="fa fa-sort fa-fw"></i> -->
+                        <strong>Last Update</strong><a href="" ng-click="getTasks('updated_at','DESC')"><i class="fa fa-caret-up fa-2x"></i></a><a href="" ng-click="getTasks('updated_at','ASC')"><i class="fa fa-caret-down fa-2x"></i></a>
                     </div>
                     <div class="col-md-1">
-                        <strong>Priority</strong><a href=""><i class="fa fa-caret-up fa-2x"></i></a><a href=""><i class="fa fa-caret-down fa-2x"></i></a>
+                        <strong>Priority</strong><a href="" ng-click="getTasks('priority','DESC')"><i class="fa fa-caret-up fa-2x"></i></a><a href="" ng-click="getTasks('priority','ASC')"><i class="fa fa-caret-down fa-2x"></i></a>
                     </div>
                     <div class="col-md-1">
                         <p><strong>Completed</strong></p>
@@ -280,9 +280,9 @@
                         </div>
                         <div class="col-md-1">
                             <select name="priority">
-                                <option value="low" ng-selected="{{value.priority}}==low">Low</option>
-                                <option value="medium" ng-selected="{{value.priority}}==medium">Medium</option>
-                                <option value="high" ng-selected="{{value.priority}}==high">High</option>
+                                <option value="0" ng-selected="{{'0' == value.priority}}">Low</option>
+                                <option value="1" ng-selected="{{'1' == value.priority}}">Medium</option>
+                                <option value="2" ng-selected="{{'2' == value.priority}}">High</option>
                             </select>
                         </div>
                         <div class="col-md-1">
@@ -291,7 +291,7 @@
                             </label>
                         </div>
                         <div class="col-md-1">
-                            <input type="submit" class="btn btn-info btn-xs" value="Update" ng-click="updateTask(value.id)">
+                            <input type="submit" class="btn btn-info btn-xs" value="Update">
                         </div>
                         <div class="col-md-1">
                             <!-- Extra small button group -->
@@ -333,7 +333,7 @@
                                     <ul class="list-group">
                                         <li class="list-group-item" ng-repeat="comment in comments | orderBy:'createdAt'" ng-show="value.id=={{comment.task_id}}">
                                                 <label>{{comment.text}}{{comment.task_id}}</label>
-                                                <a ng-href="{{comment.url}}">Download attachment</a>
+                                                <a ng-href="{{comment.url}}" ng-hide="{{comment.url==''}}">Download attachment</a>
                                         </li>
                                     </ul>
                                 </div>

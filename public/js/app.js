@@ -68,12 +68,11 @@
                 success(function(data, status, headers, config) {
 
                     console.log(data);
-                    $scope.getTasks();
+                    $scope.getTasks('created_at','DESC');
                 }).
                 error(function(data, status, headers, config) {
                     console.log(data);
                 });
-
         }
 
         $scope.getComments = function(tid){
