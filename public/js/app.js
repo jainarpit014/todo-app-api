@@ -18,7 +18,7 @@
             var due_date = $('#due-date-input').val();
             $http({
                 method: 'POST',
-                url: 'http://localhost:8000/savetask',
+                url: 'savetask',
                 data: "title="+$scope.title+"&description="+$scope.description+"&priority="+$scope.priority+"&email="+$scope.email+"&name="+$scope.name+"&duedate="+due_date,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).
@@ -47,7 +47,7 @@
         $scope.getTasks = function(columnName,sortOrder){
             $http({
                method:'POST',
-               url:'http://localhost:8000/gettasks',
+               url:'gettasks',
                 data:"email="+$scope.email+"&flag=n&column="+columnName+"&order="+sortOrder,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).
@@ -61,7 +61,7 @@
         $scope.updateFlag = function(flag,tid){
             $http({
                 method:'POST',
-                url:'http://localhost:8000/updatetaskflag',
+                url:'updatetaskflag',
                 data:"task="+tid+"&flag="+flag,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).
@@ -78,7 +78,7 @@
         $scope.getComments = function(tid){
             $http({
                 method:'POST',
-                url:'http://localhost:8000/getcomments',
+                url:'getcomments',
                 data:"task_id="+tid,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).
@@ -94,7 +94,7 @@
         {
             $http({
                 method:'POST',
-                url:'http://localhost:8000/sendmail',
+                url:'sendmail',
                 data:"task_id="+tid+"&email="+$scope.email+"&name="+$scope.name,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).
@@ -115,7 +115,7 @@
         $scope.getTasks = function(columnName,sortOrder){
             $http({
                 method:'POST',
-                url:'http://localhost:8000/gettasks',
+                url:'gettasks',
                 data:"email="+$scope.email+"&flag=c&column="+columnName+"&order="+sortOrder,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).
@@ -137,7 +137,7 @@
         $scope.getTasks = function(columnName,sortOrder){
             $http({
                 method:'POST',
-                url:'http://localhost:8000/gettasks',
+                url:'gettasks',
                 data:"email="+$scope.email+"&flag=a&column="+columnName+"&order="+sortOrder,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).
