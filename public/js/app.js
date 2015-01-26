@@ -12,7 +12,7 @@
         $scope.setUserId = function(email,name){
             $scope.email = email;
             $scope.name = name;
-            $rootScope.$broadcast('SaveUserCredentials',email);
+            $rootScope.$broadcast('SaveUserCredentials',{email:$scope.email,name:$scope.name});
         }
         $scope.submit = function(){
             var due_date = $('#due-date-input').val();
@@ -41,8 +41,9 @@
         $scope.tasks = [];
         $scope.comments = [];
         $scope.rtid = "";
-        $scope.$on('SaveUserCredentials',function(event,email){
-            $scope.email = email;
+        $scope.$on('SaveUserCredentials',function(event,args){
+            $scope.email = args.email;
+            $scope.name= args.name;
         });
         $scope.getTasks = function(columnName,sortOrder){
             $http({
@@ -109,8 +110,9 @@
     app.controller('CompletedTaskController',["$http","$scope",function($http,$scope){
 
         $scope.tasks = [];
-        $scope.$on('SaveUserCredentials',function(event,email){
-            $scope.email = email;
+        $scope.$on('SaveUserCredentials',function(event,args){
+            $scope.email = args.email;
+            $scope.name= args.name;
         });
         $scope.getTasks = function(columnName,sortOrder){
             $http({
@@ -131,8 +133,9 @@
     app.controller('ArchiveTaskController',["$http","$scope",function($http,$scope){
 
         $scope.tasks = [];
-        $scope.$on('SaveUserCredentials',function(event,email){
-            $scope.email = email;
+        $scope.$on('SaveUserCredentials',function(event,args){
+            $scope.email = args.email;
+            $scope.name= args.name;
         });
         $scope.getTasks = function(columnName,sortOrder){
             $http({
