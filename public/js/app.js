@@ -1,6 +1,7 @@
 (function(){
 
     var app = angular.module('home',[]);
+    var access_token = 'MmF76RtJUkrwX0JmJBO0ityx6Q9pxJR7jnXeIwYM';
 
     app.controller('NewTaskController',["$http","$scope","$rootScope",function($http,$scope,$rootScope){
         $scope.title = "";
@@ -19,7 +20,7 @@
             $http({
                 method: 'POST',
                 url: 'savetask',
-                data: "title="+$scope.title+"&description="+$scope.description+"&priority="+$scope.priority+"&email="+$scope.email+"&name="+$scope.name+"&duedate="+due_date,
+                data: "title="+$scope.title+"&description="+$scope.description+"&priority="+$scope.priority+"&email="+$scope.email+"&name="+$scope.name+"&duedate="+due_date+"&access_token="+access_token,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).
                 success(function(data, status, headers, config) {
@@ -27,7 +28,7 @@
                     $scope.title = "";
                     $scope.description = "";
                     $scope.priority = "";
-                    $('#due-date-input').html("");
+                    $('#due-date-input').val("");
                 }).
                 error(function(data, status, headers, config) {
                     console.log(data);
@@ -49,7 +50,7 @@
             $http({
                method:'POST',
                url:'gettasks',
-                data:"email="+$scope.email+"&flag=n&column="+columnName+"&order="+sortOrder,
+                data:"email="+$scope.email+"&flag=n&column="+columnName+"&order="+sortOrder+"&access_token="+access_token,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).
             success(function(data, status, headers, config) {
@@ -63,7 +64,7 @@
             $http({
                 method:'POST',
                 url:'updatetaskflag',
-                data:"task="+tid+"&flag="+flag,
+                data:"task="+tid+"&flag="+flag+"&access_token="+access_token,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).
                 success(function(data, status, headers, config) {
@@ -80,7 +81,7 @@
             $http({
                 method:'POST',
                 url:'getcomments',
-                data:"task_id="+tid,
+                data:"task_id="+tid+"&access_token="+access_token,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).
                 success(function(data, status, headers, config) {
@@ -96,7 +97,7 @@
             $http({
                 method:'POST',
                 url:'sendmail',
-                data:"task_id="+tid+"&email="+$scope.email+"&name="+$scope.name,
+                data:"task_id="+tid+"&email="+$scope.email+"&name="+$scope.name+"&access_token="+access_token,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).
                 success(function(data, status, headers, config) {
@@ -118,7 +119,7 @@
             $http({
                 method:'POST',
                 url:'gettasks',
-                data:"email="+$scope.email+"&flag=c&column="+columnName+"&order="+sortOrder,
+                data:"email="+$scope.email+"&flag=c&column="+columnName+"&order="+sortOrder+"&access_token="+access_token,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).
                 success(function(data, status, headers, config) {
@@ -141,7 +142,7 @@
             $http({
                 method:'POST',
                 url:'gettasks',
-                data:"email="+$scope.email+"&flag=a&column="+columnName+"&order="+sortOrder,
+                data:"email="+$scope.email+"&flag=a&column="+columnName+"&order="+sortOrder+"&access_token="+access_token,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).
                 success(function(data, status, headers, config) {
@@ -153,13 +154,4 @@
                 });
         }
     }]);
-
-
-
-
-
-
-
-
-
 })();

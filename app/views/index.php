@@ -16,7 +16,7 @@
     <script src="/js/bootstrap-datepicker.js"></script>
     <script src="/js/jspdf.min.js"></script>
     <script type="text/javascript">
-
+        var access_token = 'MmF76RtJUkrwX0JmJBO0ityx6Q9pxJR7jnXeIwYM';
         function initializeDTP(){
             $('.dtpicker').datetimepicker();
             dueDates = $('.dtpicker');
@@ -36,6 +36,7 @@
 
             $(document).on('submit','.comment-add',function(){
                 var data = new FormData(this);
+                data.append('access_token',access_token);
                 $.ajax({
                     url:'savecomment',
                     data:data,
@@ -58,6 +59,7 @@
             });
             $(document).on('submit','.task-form',function(){
                 var data = new FormData(this);
+                data.append('access_token',access_token);
                 $.ajax({
                     url:'updatetask',
                     data:data,
@@ -339,7 +341,7 @@
                                 <div class="row col-md-5 previous-comments">
                                     <ul class="list-group">
                                         <li class="list-group-item" ng-repeat="comment in comments | orderBy:'createdAt'" ng-show="value.id=={{comment.task_id}}">
-                                                <label>{{comment.text}}{{comment.task_id}}</label>
+                                                <label>{{comment.text}}</label>
                                                 <a ng-href="{{comment.url}}" ng-hide="{{comment.url==''}}">Download attachment</a>
                                         </li>
                                     </ul>
@@ -372,6 +374,8 @@
                     <thead>
                     <tr>
                         <th>Title</th>
+                        <th>Description</th>
+                        <th>Due Date</th>
                         <th>Added On</th>
                         <th>Last Updated On</th>
                     </tr>
@@ -379,6 +383,8 @@
                     <tbody>
                     <tr ng-repeat="value in tasks">
                         <td>{{value.title}}</td>
+                        <th>{{value.description}}</th>
+                        <th>{{value.duedate}}</th>
                         <td>{{value.created_at}}</td>
                         <td>{{value.updated_at}}</td>
                     </tr>

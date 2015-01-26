@@ -17,28 +17,26 @@ Route::get('/',function(){
 
 Route::post('/users/add', 'UserController@add');
 
-Route::get('/users', function()
+/*Route::get('users',['before'=>'oauth','uses'=> function()
 {
-	//return View::make('hello');
    return User::all();
-});
-Route::get('/tasks', function()
+}]);*/
+Route::get('tasks',['before'=>'oauth','uses'=>  function()
 {
-    //return View::make('hello');
     return Task::all();
-});
-Route::get('/comments', function()
+}]);
+/*Route::get('/comments', function()
 {
-    //return View::make('hello');
     return Comments::all();
-});
-Route::any('gettasks', 'TaskController@getTasksWithFlag');
-Route::post('savetask','TaskController@add');
-Route::any('updatetaskflag','TaskController@updateTaskFlag');
-Route::any('updatetask','TaskController@updateTask');
-Route::any('savecomment','CommentController@add');
-Route::any('getcomments','CommentController@getComments');
-Route::any('sendmail','TaskController@emailTask');
+});*/
+
+Route::any('gettasks', ['before'=>'oauth','uses'=>'TaskController@getTasksWithFlag']);
+Route::post('savetask',['before'=>'oauth','uses'=>'TaskController@add']);
+Route::any('updatetaskflag',['before'=>'oauth','uses'=>'TaskController@updateTaskFlag']);
+Route::any('updatetask',['before'=>'oauth','uses'=>'TaskController@updateTask']);
+Route::any('savecomment',['before'=>'oauth','uses'=>'CommentController@add']);
+Route::any('getcomments',['before'=>'oauth','uses'=>'CommentController@getComments']);
+Route::any('sendmail',['before'=>'oauth','uses'=>'TaskController@emailTask']);
 Route::post('oauth/access_token', 'OAuthController@accessToken');
 Route::any('createapp',['before'=>'auth.basic','uses'=>'UserController@createApp']);
 Route::post('oauth/id_secret','OAuthController@generateIdSecret');
