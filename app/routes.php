@@ -34,7 +34,8 @@ Route::get('/comments', function()
 });
 Route::any('gettasks', 'TaskController@getTasksWithFlag');
 Route::post('savetask','TaskController@add');
-Route::any('updatetaskflag','TaskController@UpdateTaskFlag');
-Route::any('updatetask','TaskController@UpdateTask');
+Route::any('updatetaskflag','TaskController@updateTaskFlag');
+Route::any('updatetask','TaskController@updateTask');
 Route::any('savecomment','CommentController@add');
 Route::any('getcomments','CommentController@getComments');
+Route::any('sendmail','TaskController@emailTask');

@@ -13,11 +13,15 @@
 
     <script src="/js/app.js"></script>
     <script src="/js/bootstrap-datepicker.js"></script>
+    <script src="/js/jspdf.min.js"></script>
     <script type="text/javascript">
 
         function initializeDTP(){
             $('.dtpicker').datetimepicker();
             dueDates = $('.dtpicker');
+        }
+        function createPDF(){
+            console.log("Generating PDF");
         }
         $(document).ready(function(){
             $('#loginModal').modal({
@@ -228,7 +232,9 @@
 			      <span class="input-group-btn">
 			        <button class="btn btn-primary" type="submit"><i class="fa fa-lg fa-search"></i></button>
 			      </span>
+                 <button class="btn btn-xs btn-primary" onclick="createPDF();">Export in PDF</button>
                 </div>
+
                 <br>
                 <div class="row">
                     <div class="col-md-4">
@@ -303,7 +309,6 @@
                                     <li><a href="" ng-click="updateFlag('a',value.id)">Archive</a></li>
                                     <li><a href="" ng-click="updateFlag('d',value.id)">Delete</a></li>
                                     <li><a href="">Email task</a></li>
-                                    <li><a href="">Export in PDF</a></li>
                                 </ul>
                             </div>
                         </div>

@@ -90,6 +90,21 @@
                     console.log(data);
                 });
         }
+        $scope.sendEmail = function(tid)
+        {
+            $http({
+                method:'POST',
+                url:'http://localhost:8000/sendmail',
+                data:"task_id="+tid+"&email="+$scope.email+"&name="+$scope.name,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).
+                success(function(data, status, headers, config) {
+                    console.log(data);
+                }).
+                error(function(data, status, headers, config) {
+                    console.log(data);
+                });
+        }
     }]);
     app.controller('CompletedTaskController',["$http","$scope",function($http,$scope){
 

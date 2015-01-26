@@ -42,7 +42,7 @@ class TaskController extends BaseController {
 
         return $responseArray;
     }
-    public function UpdateTaskFlag()
+    public function updateTaskFlag()
     {
         $task = Task::find(Input::get('task'));
 
@@ -50,7 +50,7 @@ class TaskController extends BaseController {
 
         $task->save();
     }
-    public function UpdateTask()
+    public function updateTask()
     {
         $task = Task::find(Input::get('task_id'));
         $task->title = Input::get('title');
@@ -66,6 +66,18 @@ class TaskController extends BaseController {
         else{
             return "false";
         }
+    }
+    public function emailTask()
+    {
+        $task = Task::find(Input::get('task_id'));
+
+        $data = array('Title'=>$task->title,'Description'=>$task->description,'Priority'=>$task->priority,'Duedate'=>$task->duedate,'AddedOn'=>$task->created_at,'LastUpdatedOn'=>'updated_at');
+
+        Mail::send('emails.task',$data, function($message)
+        {
+            $message->from('todo_app@todoapp.com', 'Todo-App');
+            $message->to(Input::get('email'), Input::get('name'))->subject('New Task.');
+        });
     }
 
 }
