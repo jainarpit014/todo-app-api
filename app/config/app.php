@@ -121,7 +121,9 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
-        'Aws\Laravel\AwsServiceProvider'
+        'Aws\Laravel\AwsServiceProvider',
+        'LucaDegasperi\OAuth2Server\Storage\FluentStorageServiceProvider',
+        'LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider'
 
 	),
 
@@ -189,7 +191,8 @@ return array(
 		'URL'               => 'Illuminate\Support\Facades\URL',
 		'Validator'         => 'Illuminate\Support\Facades\Validator',
 		'View'              => 'Illuminate\Support\Facades\View',
-        'AWS'                   => 'Aws\Laravel\AwsFacade'
+        'AWS'               => 'Aws\Laravel\AwsFacade',
+        'Authorizer'        => 'LucaDegasperi\OAuth2Server\Facades\AuthorizerFacade',
 
 	),
 

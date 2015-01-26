@@ -39,3 +39,4 @@ Route::any('updatetask','TaskController@updateTask');
 Route::any('savecomment','CommentController@add');
 Route::any('getcomments','CommentController@getComments');
 Route::any('sendmail','TaskController@emailTask');
+Route::post('oauth/access_token', 'OAuthController@accessToken');

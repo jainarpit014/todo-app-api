@@ -37,7 +37,7 @@
             $(document).on('submit','.comment-add',function(){
                 var data = new FormData(this);
                 $.ajax({
-                    url:'http://localhost:8000/savecomment',
+                    url:'savecomment',
                     data:data,
                     type:'POST',
                     mimeType:"multipart/form-data",
@@ -59,7 +59,7 @@
             $(document).on('submit','.task-form',function(){
                 var data = new FormData(this);
                 $.ajax({
-                    url:'http://localhost:8000/updatetask',
+                    url:'updatetask',
                     data:data,
                     type:'POST',
                     mimeType:"multipart/form-data",
