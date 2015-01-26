@@ -16,7 +16,7 @@ class OAuthController extends Controller
         $this->beforeFilter('check-authorization-params', ['only' => ['getAuthorize', 'postAuthorize']]);
     }
 
-    public function postAccessToken()
+    public function accessToken()
     {
          return Response::json($this->authorizer->issueAccessToken());
     }
@@ -62,8 +62,9 @@ class OAuthController extends Controller
             $user = User::find(Auth::user()->id);
             $user->user_auth = $clientId;
             $resp = $user->save;
-            return View::make('client_token')->with('client_data',array('id'=>$clientId,'secret'=>$clientSecret));
+            return View::make('client_token')->with('client_data',array($clientId,$clientSecret));
         }
+	return "done";
 
     }
 }

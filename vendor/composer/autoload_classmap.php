@@ -1892,6 +1892,7 @@ return array(
     'Net_SSH2' => $vendorDir . '/phpseclib/phpseclib/phpseclib/Net/SSH2.php',
     'Normalizer' => $vendorDir . '/patchwork/utf8/class/Normalizer.php',
     'OAuthController' => $baseDir . '/app/controllers/OAuthController.php',
+    'OauthClient' => $baseDir . '/app/models/OauthClient.php',
     'PHPParser_Autoloader' => $vendorDir . '/nikic/php-parser/lib/PHPParser/Autoloader.php',
     'PHPParser_Builder' => $vendorDir . '/nikic/php-parser/lib/PHPParser/Builder.php',
     'PHPParser_BuilderAbstract' => $vendorDir . '/nikic/php-parser/lib/PHPParser/BuilderAbstract.php',

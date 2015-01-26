@@ -6,13 +6,13 @@ class UserController extends BaseController {
     {
         $user = User::where('email',Input::get('email'))->get();
         if($user->isEmpty()){
-
-            $defaultPassword = Hash::make($this->generateRandomString());
+	    $pass = $this->generateRandomString();
+            $defaultPassword = Hash::make($pass);
             $response = User::create(array('name'=>Input::get('name'),'email'=>Input::get('email'),'password'=>$defaultPassword));
 
-            $data = array('email'=>Input::get('email'),'password'=>$defaultPassword);
+            $data = array('email'=>Input::get('email'),'password'=>$pass);
 
-            Mail::send('credential.task',$data, function($message)
+            Mail::send('emails.credential',$data, function($message)
             {
                 $message->from('todo_app@todoapp.com', 'Todo-App');
                 $message->to(Input::get('email'), Input::get('name'))->subject('Your Password to access api');
@@ -39,7 +39,8 @@ class UserController extends BaseController {
         $user = User::find(Auth::user()->id);
         if($user->user_auth)
         {
-
+		$oauthClient = OauthClient::find($user->user_auth);
+            return View::make('client_token')->with('client_data',array($oauthClient->id,$oauthClient->secret));
         }
         else{
             return View::make('create_app');
