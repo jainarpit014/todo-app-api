@@ -221,7 +221,7 @@
 
         <!-- Tab panes -->
         <br>
-        <div class="tab-content" id="target">
+        <div class="tab-content">
             <div role="tabpanel" id="add-task" class="tab-pane active col-md-5" id="add" ng-controller="NewTaskController">
                 <form ng-submit="submit()">
                     <div class="form-group">
@@ -286,7 +286,7 @@
                     </div>
                 </div>
                 <hr style="margin: 0">
-                <div class="row one-task" ng-repeat="value in tasks | filter:search" id="{{value.id}}" >
+                <div class="row one-task" ng-repeat="value in tasks | filter:search" id="{{value.id}}" id="target">
                     <form class="task-form">
                         <div class="col-md-4">
                             <div class="form-group">
