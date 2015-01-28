@@ -38,10 +38,10 @@
                 }
             };
                 var doc = new jsPDF();
-                doc.fromHTML($('#target').html(), 15, 15, {
+                doc.fromHTML($('#all-tasks').html(), 15, 15, {
                     'width': 170,'elementHandlers': specialElementHandlers
                 });
-                doc.save('sample-file.pdf');
+                doc.save('tasks.pdf');
         }
         $(document).ready(function(){
             $('#loginModal').modal({
@@ -217,6 +217,7 @@
             <li role="presentation"><a href="#update" aria-controls="update" role="tab" data-toggle="tab" onclick="angular.element(document.getElementById('update')).scope().getTasks('updated_at','DESC')">Update</a></li>
             <li role="presentation"><a href="#completed" aria-controls="completed" role="tab" data-toggle="tab" onclick="angular.element(document.getElementById('completed')).scope().getTasks('updated_at','DESC')">Completed</a></li>
             <li role="presentation"><a href="#archive" aria-controls="archive" role="tab" data-toggle="tab" onclick="angular.element(document.getElementById('archive')).scope().getTasks('updated_at','DESC')">Archive</a></li>
+            <li role="presentation"><a href="#all-tasks" aria-controls="all-tasks" role="tab" data-toggle="tab" onclick="angular.element(document.getElementById('all-tasks')).scope().getTasks('updated_at','DESC')">All Tasks</a></li>
         </ul>
 
         <!-- Tab panes -->
@@ -255,7 +256,7 @@
 			        <button class="btn btn-primary" type="submit"><i class="fa fa-lg fa-search"></i></button>
 			      </span>
 		</div><br>
-                <button class="btn btn-sm btn-primary" onclick="createPDF();">Export in PDF</button>
+
                 <br>
                 <div class="row">
                     <div class="col-md-4">
@@ -404,6 +405,33 @@
                         <th>{{value.duedate}}</th>
                         <td>{{value.created_at}}</td>
                         <td>{{value.updated_at}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="all-tasks" ng-controller="AllTaskController">
+                <button class="btn btn-sm btn-primary" onclick="createPDF();">Export in PDF</button>
+                <table class="table table-hover" id="all-tasks">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Due Date</th>
+                        <th>Added On</th>
+                        <th>Last Updated On</th>
+                        <th>Priority</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="value in tasks">
+                        <td>{{value.title}}</td>
+                        <th>{{value.description}}</th>
+                        <th>{{value.duedate}}</th>
+                        <td>{{value.created_at}}</td>
+                        <td>{{value.updated_at}}</td>
+                        <td>{{value.priority}}</td>
+                        <td>{{value.flag}}</td>
                     </tr>
                     </tbody>
                 </table>

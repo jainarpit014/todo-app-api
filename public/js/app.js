@@ -154,4 +154,27 @@
                 });
         }
     }]);
+    app.controller('AllTaskController',["$http","$scope",function($http,$scope){
+
+        $scope.tasks = [];
+        $scope.$on('SaveUserCredentials',function(event,args){
+            $scope.email = args.email;
+            $scope.name= args.name;
+        });
+        $scope.getTasks = function(columnName,sortOrder){
+            $http({
+                method:'POST',
+                url:'getalltasks',
+                data:"email="+$scope.email+"&column="+columnName+"&order="+sortOrder+"&access_token="+access_token,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).
+                success(function(data, status, headers, config) {
+                    $scope.tasks = data;
+                    console.log($scope.tasks);
+                }).
+                error(function(data, status, headers, config) {
+                    console.log(data);
+                });
+        }
+    }]);
 })();

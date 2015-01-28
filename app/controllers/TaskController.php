@@ -83,5 +83,19 @@ class TaskController extends BaseController {
         });
         echo "ya";
     }
+    public function getAllTasks()
+    {
+        $originalInput = Request::input();
+        $request = Request::create('/users/add', 'POST', array('email'=>Input::get('email'),'name'=>Input::get('name')));
+        Request::replace($request->input());
+        $userId = Route::dispatch($request)->getContent();
+        Request::replace($originalInput);
+
+
+        $response = Task::where(array('user_id'=>$userId))->whereNotIn( 'flag', ['d'])->orderBy(Input::get('column'),Input::get('order'))->get();
+        $responseArray = $response->toJson();
+
+        return $responseArray;
+    }
 
 }

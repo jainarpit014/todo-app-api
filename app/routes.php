@@ -31,6 +31,7 @@ Route::get('tasks',['before'=>'oauth','uses'=>  function()
 });*/
 
 Route::post('gettasks', ['before'=>'oauth','uses'=>'TaskController@getTasksWithFlag']);
+Route::post('getalltasks', ['before'=>'oauth','uses'=>'TaskController@getAllTasks']);
 Route::post('savetask',['before'=>'oauth','uses'=>'TaskController@add']);
 Route::post('updatetaskflag',['before'=>'oauth','uses'=>'TaskController@updateTaskFlag']);
 Route::post('updatetask',['before'=>'oauth','uses'=>'TaskController@updateTask']);
