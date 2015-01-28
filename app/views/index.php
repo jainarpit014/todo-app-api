@@ -221,7 +221,7 @@
 
         <!-- Tab panes -->
         <br>
-        <div class="tab-content">
+        <div class="tab-content"  id="target">
             <div role="tabpanel" id="add-task" class="tab-pane active col-md-5" id="add" ng-controller="NewTaskController">
                 <form ng-submit="submit()">
                     <div class="form-group">
@@ -248,7 +248,6 @@
                     <input type="submit" class="btn btn-sm btn-primary" value="Save">
                 </form>
             </div>
-            <div id="target">
             <div role="tabpanel" class="tab-pane" id="update" ng-controller="UpdateTaskController">
                 <div class="input-group col-md-3">
                     <input type="text" class="form-control" placeholder="Search Task" name="search" id="search" ng-model="search.$">
@@ -368,7 +367,6 @@
 
                 </div>
 
-            </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="completed" ng-controller="CompletedTaskController">
                 <table class="table table-hover">
