@@ -33,13 +33,13 @@
             console.log("Generating PDF");
 
             var specialElementHandlers = {
-                '#editor': function (element,renderer) {
+                '#export-btn': function (element,renderer) {
                     return true;
                 }
             };
                 var doc = new jsPDF();
                 doc.fromHTML($('#all-tasks').html(), 15, 15, {
-                    'width': 170,'elementHandlers': specialElementHandlers
+                    'width': 370,'elementHandlers': specialElementHandlers
                 });
                 doc.save('tasks.pdf');
         }
@@ -67,6 +67,7 @@
                     success: function(data, textStatus, jqXHR)
                     {
                         console.log(data);
+			alert("Comment added,please click on show previous comments to check.");
                     },
                     error: function(jqXHR, textStatus, errorThrown)
                     {
@@ -410,7 +411,7 @@
                 </table>
             </div>
             <div role="tabpanel" class="tab-pane" id="all-tasks" ng-controller="AllTaskController">
-                <button class="btn btn-sm btn-primary" onclick="createPDF();">Export in PDF</button>
+                <button class="btn btn-sm btn-primary" onclick="createPDF();" id="export-btn">Export in PDF</button>
                 <table class="table table-hover" id="all-tasks">
                     <thead>
                     <tr>
@@ -425,9 +426,9 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="value in tasks">
-                        <td>{{value.title}}</td>
-                        <th>{{value.description}}</th>
-                        <th>{{value.duedate}}</th>
+                        <td><strong>{{value.title}}</strong></td>
+                        <td>{{value.description}}</td>
+                        <td>{{value.duedate}}</td>
                         <td>{{value.created_at}}</td>
                         <td>{{value.updated_at}}</td>
                         <td>{{value.priority}}</td>

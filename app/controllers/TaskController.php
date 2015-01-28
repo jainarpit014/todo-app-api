@@ -93,9 +93,17 @@ class TaskController extends BaseController {
 
 
         $response = Task::where(array('user_id'=>$userId))->whereNotIn( 'flag', ['d'])->orderBy(Input::get('column'),Input::get('order'))->get();
-        $responseArray = $response->toJson();
+	$priority = array(0=>'Low',1=>'Medium',2=>'High');
+	$flag = array('a'=>'Archived','n'=>'New','c'=>'Completed');
+	$respArray = $response->toArray();
+	foreach($respArray as $key=>$value){
+		$respArray[$key]['priority'] = $priority[$value['priority']];
+		$respArray[$key]['flag'] = $flag[$value['flag']];
+	}
+		 
+      // $responseArray = $response->toJson();
 
-        return $responseArray;
+        return $respArray;
     }
 
 }
