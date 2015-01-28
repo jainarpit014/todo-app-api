@@ -256,10 +256,8 @@
 			      </span>
 		</div><br>
                 <button class="btn btn-sm btn-primary" onclick="createPDF();">Export in PDF</button>
-            
-
                 <br>
-                <div class="row">
+                <div class="row" id="target">
                     <div class="col-md-4">
                         <strong>Title</strong>
                     </div>
@@ -286,7 +284,7 @@
                     </div>
                 </div>
                 <hr style="margin: 0">
-                <div class="row one-task" ng-repeat="value in tasks | filter:search" id="{{value.id}}" id="target">
+                <div class="row one-task" ng-repeat="value in tasks | filter:search" id="{{value.id}}">
                     <form class="task-form">
                         <div class="col-md-4">
                             <div class="form-group">
