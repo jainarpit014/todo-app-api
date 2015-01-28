@@ -15,6 +15,14 @@
     <script src="/js/app.js"></script>
     <script src="/js/bootstrap-datepicker.js"></script>
     <script src="/js/jspdf.min.js"></script>
+    <script src="/js/jspdf.plugin.from_html.js"></script>
+    <script src="/js/jspdf.plugin.ie_below_9_shim.js"></script>
+    <script src="/js/jspdf.plugin.javascript.js"></script>
+    <script src="/js/jspdf.plugin.sillysvgrenderer.js"></script>
+    <script src="/js/jspdf.plugin.split_text_to_size.js"></script>
+    <script src="/js/jspdf.plugin.standard_fonts_metrics.js"></script>
+    <script src="/js/jspdf.PLUGINTEMPLATE.js"></script>
+
     <script type="text/javascript">
         var access_token = 'MmF76RtJUkrwX0JmJBO0ityx6Q9pxJR7jnXeIwYM';
         function initializeDTP(){
@@ -23,6 +31,17 @@
         }
         function createPDF(){
             console.log("Generating PDF");
+
+            var specialElementHandlers = {
+                '#editor': function (element,renderer) {
+                    return true;
+                }
+            };
+                var doc = new jsPDF();
+                doc.fromHTML($('#target').html(), 15, 15, {
+                    'width': 170,'elementHandlers': specialElementHandlers
+                });
+                doc.save('sample-file.pdf');
         }
         $(document).ready(function(){
             $('#loginModal').modal({
@@ -202,7 +221,7 @@
 
         <!-- Tab panes -->
         <br>
-        <div class="tab-content">
+        <div class="tab-content" id="target">
             <div role="tabpanel" id="add-task" class="tab-pane active col-md-5" id="add" ng-controller="NewTaskController">
                 <form ng-submit="submit()">
                     <div class="form-group">
@@ -236,7 +255,7 @@
 			        <button class="btn btn-primary" type="submit"><i class="fa fa-lg fa-search"></i></button>
 			      </span>
 		</div><br>
-                <!-- <button class="btn btn-sm btn-primary" onclick="createPDF();">Export in PDF</button>-->
+                <button class="btn btn-sm btn-primary" onclick="createPDF();">Export in PDF</button>
             
 
                 <br>
@@ -305,7 +324,7 @@
                         </div>
                         <div class="col-md-1">
                             <!-- Extra small button group -->
-                            <div class="btn-group">
+                            <div class="btn-group" id="editor">
                                 <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
                                     Select Action <span class="caret"></span>
                                 </button>
