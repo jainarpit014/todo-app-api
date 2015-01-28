@@ -13,7 +13,7 @@
 </head>
 <body>
     <div>
-        <form action="oauth/id_secret" method="post" enctype="multipart/form-data">
+        <form action="id_secret" method="post" enctype="multipart/form-data">
             <input type="text" name="app_name" placeholder="App Name">
             <button type="submit">Generate Id and Secret Key</button>
         </form>

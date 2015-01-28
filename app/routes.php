@@ -38,5 +38,5 @@ Route::post('savecomment',['before'=>'oauth','uses'=>'CommentController@add']);
 Route::post('getcomments',['before'=>'oauth','uses'=>'CommentController@getComments']);
 Route::post('sendmail',['before'=>'oauth','uses'=>'TaskController@emailTask']);
 Route::post('oauth/access_token', 'OAuthController@accessToken');
-Route::post('createapp',['before'=>'auth.basic','uses'=>'UserController@createApp']);
-Route::post('oauth/id_secret','OAuthController@generateIdSecret');
+Route::get('createapp',['before'=>'auth.basic','uses'=>'UserController@createApp']);
+Route::post('id_secret','OAuthController@generateIdSecret');

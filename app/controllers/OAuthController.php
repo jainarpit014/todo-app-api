@@ -57,11 +57,12 @@ class OAuthController extends Controller
         $clientId = $this->generateRandomString(20);
         $clientSecret = $this->generateRandomString(25);
         $response = OauthClient::create(array('id'=>$clientId,'secret'=>$clientSecret,'name'=>Input::get('app_name')));
+	
         if($response)
         {
             $user = User::find(Auth::user()->id);
             $user->user_auth = $clientId;
-            $resp = $user->save;
+            $resp = $user->save();
             return View::make('client_token')->with('client_data',array($clientId,$clientSecret));
         }
 	return "done";
