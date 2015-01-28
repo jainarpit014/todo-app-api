@@ -248,6 +248,7 @@
                     <input type="submit" class="btn btn-sm btn-primary" value="Save">
                 </form>
             </div>
+            <div id="target">
             <div role="tabpanel" class="tab-pane" id="update" ng-controller="UpdateTaskController">
                 <div class="input-group col-md-3">
                     <input type="text" class="form-control" placeholder="Search Task" name="search" id="search" ng-model="search.$">
@@ -257,7 +258,7 @@
 		</div><br>
                 <button class="btn btn-sm btn-primary" onclick="createPDF();">Export in PDF</button>
                 <br>
-                <div class="row" id="target">
+                <div class="row">
                     <div class="col-md-4">
                         <strong>Title</strong>
                     </div>
@@ -367,6 +368,7 @@
 
                 </div>
 
+            </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="completed" ng-controller="CompletedTaskController">
                 <table class="table table-hover">
